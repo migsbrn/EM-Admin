@@ -1,11 +1,9 @@
-// src/Header.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Header.css";
 import profileImage from "../assets/haha.jpg";
-import { auth } from "../firebase"; // Make sure firebase is properly imported
 
-const Header = () => {
+const Header = ({ setIsLoggedIn }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLink, setActiveLink] = useState(location.pathname);
@@ -16,7 +14,6 @@ const Header = () => {
     setActiveLink(location.pathname);
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -27,17 +24,11 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = async () => {
-    const confirmed = window.confirm("Are you sure you want to log out?");
-    if (confirmed) {
-      try {
-        await auth.signOut(); // Firebase sign out
-        navigate("/login");
-      } catch (error) {
-        console.error("Logout failed:", error);
-        alert("Something went wrong while logging out.");
-      }
-    }
+  const handleLogout = () => {
+    // Clear local storage / cookies or auth state here if needed
+    // Redirect to login page
+    setIsLoggedIn(false); // Update logged-in state
+    navigate("/login"); // Redirect to login page
   };
 
   return (
@@ -95,9 +86,12 @@ const Header = () => {
           {showDropdown && (
             <div className="profile-dropdown">
               <Link to="/profile" className="dropdown-item">
-                Account
+                Account Profile
               </Link>
-              <button className="dropdown-item" onClick={handleLogout}>
+              <button
+                className="dropdown-item logout-btn"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </div>

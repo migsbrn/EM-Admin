@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
 import "../styles/ManageTeacher.css";
 
 const ManageTeacher = () => {
@@ -8,7 +7,7 @@ const ManageTeacher = () => {
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
-    // Simulate fetching teachers from a backend
+    // Simulate fetching approved teachers
     setTimeout(() => {
       setTeachers([
         {
@@ -17,7 +16,7 @@ const ManageTeacher = () => {
           email: "bearosas@gmail.com",
           school: "NU-Dasma",
           signupDate: "2025-04-15",
-          status: "Pending",
+          status: "Active",
         },
         {
           id: 2,
@@ -25,7 +24,7 @@ const ManageTeacher = () => {
           email: "kylabongcayao@gmail.com",
           school: "NU-Dasma",
           signupDate: "2025-04-18",
-          status: "Pending",
+          status: "Active",
         },
         {
           id: 3,
@@ -33,7 +32,7 @@ const ManageTeacher = () => {
           email: "shannenmalapitan@gmail.com",
           school: "NU-Dasma",
           signupDate: "2025-04-18",
-          status: "Pending",
+          status: "Inactive",
         },
         {
           id: 4,
@@ -41,15 +40,15 @@ const ManageTeacher = () => {
           email: "maryjoybrin@gmail.com",
           school: "NU-Dasma",
           signupDate: "2025-04-18",
-          status: "Pending",
+          status: "Deleted",
         },
       ]);
     }, 1000);
   }, []);
 
-  const handleStatusChange = (id, status) => {
+  const handleStatusChange = (id, newStatus) => {
     setTeachers((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, status } : t))
+      prev.map((t) => (t.id === id ? { ...t, status: newStatus } : t))
     );
   };
 
@@ -60,76 +59,65 @@ const ManageTeacher = () => {
   });
 
   return (
-    <div className="teacher-management-layout">
-      <Sidebar />
-      <div className="main-teacher-management">
-        <div className="dashboard-header">
-          <div className="header-admin">Admin</div>
-          <div className="header-actions">
-            <span className="notification-bell">&#128276;</span>
-            <span className="header-avatar">👤</span>
-          </div>
+    <div className="main-teacher-management">
+      <div className="main-content">
+        <h1 className="teacher-management-title">Manage Teachers</h1>
+
+        <div className="teacher-controls-manage">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Deleted">Deleted</option>
+          </select>
         </div>
 
-        <div className="main-content">
-          <h1 className="teacher-management-title">Manage Teachers</h1>
-
-          <div className="teacher-controls-manage">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <option value="All">All</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-              <option value="Pending">Pending</option>
-            </select>
-          </div>
-
-          <div className="teacher-table-container">
-            <table className="teacher-table">
-              <thead>
+        <div className="teacher-table-container">
+          <table className="teacher-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>School</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTeachers.length === 0 ? (
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>School</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <td colSpan="5">No teachers found.</td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredTeachers.length === 0 ? (
-                  <tr>
-                    <td colSpan="5">No teachers found.</td>
+              ) : (
+                filteredTeachers.map((teacher) => (
+                  <tr key={teacher.id}>
+                    <td>{teacher.name}</td>
+                    <td>{teacher.email}</td>
+                    <td>{teacher.school}</td>
+                    <td>{teacher.status}</td>
+                    <td>
+                      <select
+                        value={teacher.status}
+                        onChange={(e) =>
+                          handleStatusChange(teacher.id, e.target.value)
+                        }
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Deleted">Deleted</option>
+                      </select>
+                    </td>
                   </tr>
-                ) : (
-                  filteredTeachers.map((teacher) => (
-                    <tr key={teacher.id}>
-                      <td>{teacher.name}</td>
-                      <td>{teacher.email}</td>
-                      <td>{teacher.school}</td>
-                      <td>{teacher.status}</td>
-                      <td>
-                        <select
-                          value={teacher.status}
-                          onChange={(e) =>
-                            handleStatusChange(teacher.id, e.target.value)
-                          }
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Approved">Approved</option>
-                          <option value="Rejected">Rejected</option>
-                        </select>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

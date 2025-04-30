@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
 import "../styles/TeacherApproval.css";
 
 const TeacherApproval = () => {
@@ -59,32 +58,23 @@ const TeacherApproval = () => {
   });
 
   return (
-    <div className="teacher-approval-layout">
-      <Sidebar />
-      <div className="main-teacher-approval">
-        <div className="dashboard-header">
-          <div className="header-admin">Admin</div>
-          <div className="header-actions">
-            <span className="notification-bell">&#128276;</span>
-            <span className="header-avatar">👤</span>
-          </div>
-        </div>
+    <div className="teacher-approval-container">
+      <div className="teacher-approval-main">
+        <div className="teacher-approval-content">
+          <h1 className="teacher-approval-header">Teacher Account Approval</h1>
 
-        <div className="main-content">
-          <h1 className="teacher-approval-title">Teacher Account Approval</h1>
-
-          <div className="teacher-controls">
+          <div className="teacher-approval-controls">
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="approval-search-bar"
+              className="teacher-approval-search-bar"
             />
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="approval-filter-select"
+              className="teacher-approval-filter-select"
             >
               <option value="All">All</option>
               <option value="Approved">Approved</option>
@@ -93,8 +83,8 @@ const TeacherApproval = () => {
             </select>
           </div>
 
-          <div className="teacher-table-container">
-            <table className="teacher-table">
+          <div className="teacher-approval-table-container">
+            <table className="teacher-approval-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -117,7 +107,7 @@ const TeacherApproval = () => {
                         onChange={(e) =>
                           handleStatusChange(teacher.id, e.target.value)
                         }
-                        className="teacher-status-select"
+                        className="teacher-approval-status-select"
                       >
                         <option value="Pending">Pending</option>
                         <option value="Approved">Approved</option>

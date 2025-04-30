@@ -1,0 +1,139 @@
+/* Header container */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 20px 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Admin panel title styling */
+.header-admin {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-right: -30px;
+}
+
+/* Navigation links container */
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Gap between links */
+}
+
+/* Styling for each link in the header */
+.header-actions a {
+  color: rgb(0, 0, 0);
+  font-size: 1.05em;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Hover effect for links */
+.header-actions a:hover {
+  color: #dcdcdc;
+  background-color: #f1f1f1;
+  text-decoration: none;
+}
+
+/* Active link styling */
+.header-actions a.active {
+  background-color: #d7f1f0;
+  color: rgb(5, 5, 5);
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* Profile section container */
+.profile-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* Profile image */
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Profile wrapper for dropdown positioning */
+.profile-wrapper {
+  position: relative;
+  margin-right: 50px;
+}
+
+/* Dropdown menu */
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 180px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  padding: 12px 16px;
+  text-align: left;
+  color: #333;
+  text-decoration: none;
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect on dropdown */
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Logout button border */
+.logout-btn {
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Prevent header from overlapping page content */
+body {
+  margin-top: 100px;
+}
+
+/* Add spacing to the left for the first link to align */
+.header-actions a:first-child {
+  margin-left: 0;
+}

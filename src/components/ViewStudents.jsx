@@ -1,6 +1,4 @@
-// src/ViewStudents.jsx
 import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
 import "../styles/ViewStudents.css";
 
 const ViewStudents = () => {
@@ -47,70 +45,57 @@ const ViewStudents = () => {
   });
 
   return (
-    <div className="teacher-management-layout">
-      <Sidebar />
-      <div className="main-teacher-management">
-        <div className="dashboard-header">
-          <div className="header-admin">Admin</div>
-          <div className="header-actions">
-            <span className="notification-bell">&#128276;</span>
-            <span className="header-avatar">👤</span>
-          </div>
-        </div>
+    <div className="vs-container">
+      <h1 className="vs-title">Student List</h1>
 
-        <div className="main-content">
-          <h1 className="teacher-management-title">Student List</h1>
+      <div className="vs-controls">
+        <input
+          className="vs-search"
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
-          <div className="student-filter-controls">
-            <input
-              className="student-search-input"
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+        <select
+          className="vs-select"
+          value={progressFilter}
+          onChange={(e) => setProgressFilter(e.target.value)}
+        >
+          <option value="">All</option>
+          {[...Array(10)].map((_, index) => {
+            const val = (index + 1) * 10;
+            return (
+              <option key={val} value={`${val}%`}>
+                {val}%
+              </option>
+            );
+          })}
+        </select>
+      </div>
 
-            <select
-              className="student-progress-select"
-              value={progressFilter}
-              onChange={(e) => setProgressFilter(e.target.value)}
-            >
-              <option value="">All</option>
-              {[...Array(10)].map((_, index) => {
-                const val = (index + 1) * 10;
-                return (
-                  <option key={val} value={`${val}%`}>
-                    {val}%
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-
-          <div className="teacher-table-container">
-            <table className="teacher-table">
-              <thead>
-                <tr>
-                  <th>Nickname</th>
-                  <th>Assigned Teacher</th>
-                  <th>Progress</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredStudents.map((student) => (
-                  <tr key={student.id}>
-                    <td>{student.nickname}</td>
-                    <td>{student.assignedTeacher}</td>
-                    <td>{student.progress}</td>
-                    <td>{student.details}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {filteredStudents.length === 0 && <p>No students found.</p>}
-          </div>
-        </div>
+      <div className="vs-table-container">
+        <table className="vs-table">
+          <thead>
+            <tr>
+              <th>Nickname</th>
+              <th>Assigned Teacher</th>
+              <th>Progress</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredStudents.map((student) => (
+              <tr key={student.id}>
+                <td>{student.nickname}</td>
+                <td>{student.assignedTeacher}</td>
+                <td>{student.progress}</td>
+                <td>{student.details}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {filteredStudents.length === 0 && <p>No students found.</p>}
       </div>
     </div>
   );
